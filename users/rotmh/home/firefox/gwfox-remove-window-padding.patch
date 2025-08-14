@@ -1,0 +1,35 @@
+diff --git a/chrome/userChrome.css b/chrome/userChrome.css
+index 203407d..b6cd8b6 100644
+--- a/chrome/userChrome.css
++++ b/chrome/userChrome.css
+@@ -77,18 +77,18 @@
+ }
+ 
+ :root:not([inDOMFullscreen], [chromehidden~="toolbar"]) {
+-#tabbrowser-tabbox browser:not(.devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe) {
+-  border-radius: 6px;
+-  clip-path: inset(0 round 8px);
+-  background-color: light-dark(#fff, #202020) !important;
+-  -moz-window-dragging: no-drag;
+-}
+-
+-.browserStack {
+-  border-radius: 8px;
+-  margin: 0 8px 8px;
+-  box-shadow: 0 1.5px 9px light-dark(#00000026, #00000040);
+-}
++/* #tabbrowser-tabbox browser:not(.devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe) { */
++  /* border-radius: 6px; */
++  /* clip-path: inset(0 round 8px); */
++  /* background-color: light-dark(#fff, #202020) !important; */
++  /* -moz-window-dragging: no-drag; */
++/* } */
++
++/* .browserStack { */
++  /* border-radius: 8px; */
++  /* margin: 0 8px 8px; */
++  /* box-shadow: 0 1.5px 9px light-dark(#00000026, #00000040); */
++/* } */
+ 
+ #tabbrowser-tabpanels {
+   margin-top: 0;
