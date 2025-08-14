@@ -38,7 +38,7 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    # helix-git.url = "github:helix-editor/helix";
+    helix-git.url = "github:helix-editor/helix";
   };
 
   outputs =
@@ -46,7 +46,6 @@
     let
       system = "x86_64-linux";
 
-      # pkgs = import nixpkgs { inherit system; };
       lib' = import ./lib { inherit (nixpkgs) lib; };
     in
     {

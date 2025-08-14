@@ -30,6 +30,7 @@ in {
 
     policies = {
       BlockAboutConfig = true;
+      DisableTelemetry = true;
     };
 
     profiles.${username} = {
@@ -42,6 +43,81 @@ in {
         "sidebar.animation.enabled" = false;
         "gwfox.plus" = true;
         "gwfox.atbc" = true;
+
+        "browser.bookmarks.restore_default_bookmarks" = false; # don't restore default bookmarks
+        "browser.quitShortcut.disabled" = true; # disable ctrl+q
+        "browser.shell.checkDefaultBrowser" = false; # don't check if default browser
+
+        "browser.tabs.warnOnClose" = true;
+        "browser.tabs.warnOnCloseOtherTabs" = true;
+        "browser.tabs.warnOnQuit" = true;
+      };
+
+      search = {
+        default = "DuckDuckGo";
+        force = true;
+        engines = {
+          # don't need these default ones
+          "Amazon.com".metaData.hidden = true;
+          "Bing".metaData.hidden = true;
+          "eBay".metaData.hidden = true;
+
+          "DuckDuckGo" = {
+            urls = [{
+              template = "https://duckduckgo.com";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",d" ];
+          };
+          "Google" = {
+            urls = [{
+              template = "https://google.com/search";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",g" ];
+          };
+          "Nix Packages" = {
+            urls = [{
+              template = "https://search.nixos.org/packages";
+              params = [
+                { name = "type"; value = "packages"; }
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",ns" ];
+          };
+          "YouTube" = {
+            urls = [{
+              template = "https://www.youtube.com/results";
+              params = [
+                { name = "search_query"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",yt" ];
+          };
+          "Wikipedia" = {
+            urls = [{
+              template = "https://en.wikipedia.org/wiki/Special:Search";
+              params = [
+                { name = "search"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",w" ];
+          };
+          "GitHub" = {
+            urls = [{
+              template = "https://github.com/search";
+              params = [
+                { name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+            definedAliases = [ ",gh" ];
+          };
+        };
       };
 
       bookmarks = {
@@ -69,6 +145,8 @@ in {
       };
 
       extensions = {
+        force = true;
+
         packages = with inputs.firefox-addons.packages.${pkgs.system}; [
           ublock-origin
           sponsorblock

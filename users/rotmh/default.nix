@@ -22,8 +22,11 @@ in
       coreutils
       git
       curl
-      helix
+
+      # remove these
       nixd
+      nixfmt-rfc-style
+
       networkmanager
     ];
   };
