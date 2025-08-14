@@ -16,11 +16,9 @@ in
     extraGroups = [ "wheel" ];
 
     packages = with pkgs; [
-      firefox
       just
       tree
       coreutils
-      git
       curl
 
       # remove these
@@ -35,6 +33,7 @@ in
 
   programs.fish.enable = true;
   programs.hyprland.enable = true;
+
 
   home-manager = {
     useGlobalPkgs = true;
