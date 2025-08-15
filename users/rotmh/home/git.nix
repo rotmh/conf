@@ -1,10 +1,13 @@
 { ... }:
+let
+  user = import ../info.nix;
+in
 {
   programs.git = {
     enable = true;
 
-    userName = "rotmh";
-    userEmail = "horesh.rotem@gmail.com";
+    userName = user.username;
+    userEmail = user.email;
 
     ignores = [
       ".direnv/"

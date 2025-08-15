@@ -1,8 +1,8 @@
 { inputs, pkgs, ... }:
 {
   nix.settings = {
-    extra-substituters = ["https://helix.cachix.org"];
-    extra-trusted-public-keys = ["helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="];
+    extra-substituters = [ "https://helix.cachix.org" ];
+    extra-trusted-public-keys = [ "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs=" ];
   };
 
   programs.helix = {
@@ -34,14 +34,30 @@
         inline-diagnostics.cursor-line = "hint";
       };
 
-      keys = let
-        keys = [ "up" "down" "left" "right" "pageup" "pagedown" "home" "end" ];
-        disabledKeys = builtins.listToAttrs (map (k: {name= k; value = "no_op";}) keys);
-      in {
-        insert = {} // disabledKeys;
-        select = {} // disabledKeys;
-        normal = {} // disabledKeys;
-      };
+      keys =
+        let
+          keys = [
+            "up"
+            "down"
+            "left"
+            "right"
+            "pageup"
+            "pagedown"
+            "home"
+            "end"
+          ];
+          disabledKeys = builtins.listToAttrs (
+            map (k: {
+              name = k;
+              value = "no_op";
+            }) keys
+          );
+        in
+        {
+          insert = { } // disabledKeys;
+          select = { } // disabledKeys;
+          normal = { } // disabledKeys;
+        };
     };
 
     languages = {

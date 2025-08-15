@@ -5,6 +5,8 @@
     ./bluetooth.nix
   ];
 
+  users.mutableUsers = false;
+
   nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
@@ -34,11 +36,9 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm.enable = false;
   # services.xserver.desktopManager.gnome.enable = false;
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -119,52 +119,57 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
 
-
-
   systemd.services."persist-home-create-root-paths" =
-  let
+    let
       persistentHomesRoot = "/persistent";
 
-      listOfCommands = lib.mapAttrsToList
-          (_: user:
-          let
-              userHome = lib.escapeShellArg (persistentHomesRoot + user.home);
+      listOfCommands = lib.mapAttrsToList (
+        _: user:
+        let
+          userHome = lib.escapeShellArg (persistentHomesRoot + user.home);
 
-          in ''
-              if [[ ! -d ${userHome} ]]; then
-                  echo "Persistent home root folder '${userHome}' not found, creating..."
-                  mkdir -p --mode=${user.homeMode} ${userHome}
-                  chown ${user.name}:${user.group} ${userHome}
-              fi
-              ''
-          )
-          (lib.filterAttrs (_: user: user.createHome == true) config.users.users);
+        in
+        ''
+          if [[ ! -d ${userHome} ]]; then
+              echo "Persistent home root folder '${userHome}' not found, creating..."
+              mkdir -p --mode=${user.homeMode} ${userHome}
+              chown ${user.name}:${user.group} ${userHome}
+          fi
+        ''
+      ) (lib.filterAttrs (_: user: user.createHome == true) config.users.users);
 
       stringOfCommands = lib.concatLines listOfCommands;
-  in {
+    in
+    {
       script = stringOfCommands;
       unitConfig = {
-          Description = "Ensure users' home folders exist in the persistent filesystem";
-          PartOf = [ "local-fs.target" ];
-          # The folder creation should happen after the persistent home path is mounted.
-          After = [ "persist-home.mount" ];
+        Description = "Ensure users' home folders exist in the persistent filesystem";
+        PartOf = [ "local-fs.target" ];
+        # The folder creation should happen after the persistent home path is mounted.
+        After = [ "persist-home.mount" ];
       };
 
       serviceConfig = {
-          Type = "oneshot";
-          StandardOutput = "journal";
-          StandardError = "journal";
+        Type = "oneshot";
+        StandardOutput = "journal";
+        StandardError = "journal";
       };
 
       # [Install]
       wantedBy = [ "local-fs.target" ];
 
+    };
+
+  nix = {
+    settings = {
+      trusted-users = [ "@wheel" ];
+      auto-optimise-store = true;
+      warn-dirty = false;
+
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
   };
-
-
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
 }

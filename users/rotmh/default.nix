@@ -1,19 +1,33 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
 let
-  username = "rotmh";
+  user = import ./info.nix;
 in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./sops.nix
   ];
 
-  users.users.${username} = {
-    name = username;
-    shell = pkgs.fish;
+  users.groups.${user.group} = { };
+  users.users.${user.username} = {
+    name = user.username;
+    group = user.group;
 
     isNormalUser = true;
-    initialPassword = "12345";
-    extraGroups = [ "wheel" ];
+
+    hashedPasswordFile = config.sops.secrets."users/${user.username}/passwordHash".path;
+
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
+
+    shell = pkgs.fish;
 
     packages = with pkgs; [
       just
@@ -34,11 +48,10 @@ in
   programs.fish.enable = true;
   programs.hyprland.enable = true;
 
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
-    users.${username} = import ./home;
+    users.${user.username} = import ./home;
   };
 }

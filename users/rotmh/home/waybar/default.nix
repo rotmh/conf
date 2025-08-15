@@ -1,7 +1,14 @@
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
-  flake = "/persistent/nixconf123123";
-  mkMutableSymlink = path:
+  flake = "/persistent/home/rotmh/conf";
+  mkMutableSymlink =
+    path:
     config.lib.file.mkOutOfStoreSymlink (
       flake + lib.strings.removePrefix (toString inputs.self) (toString path)
     );

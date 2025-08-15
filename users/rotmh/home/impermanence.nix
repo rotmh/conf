@@ -12,20 +12,20 @@ in
       "projects"
       "forks"
 
+      "conf"
+
       "bin"
       "media"
       "downloads"
       "documents"
-
-      "conf"
 
       ".gnupg"
       ".ssh"
       ".local/share/keyrings"
       ".local/share/direnv"
 
-      # XXX: temporary solution
       ".mozilla"
+      ".cache/mozilla"
     ];
     files = [
       "Justfile"

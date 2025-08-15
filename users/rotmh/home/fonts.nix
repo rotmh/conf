@@ -4,7 +4,7 @@
     enable = true;
 
     defaultFonts = {
-      monospace = ["JetBrainsMonoNL Nerd Font"];
+      monospace = [ "JetBrainsMonoNL Nerd Font" ];
     };
   };
 

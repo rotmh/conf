@@ -1,4 +1,9 @@
-{ pkgs, inputs, config, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 let
   username = config.home.username;
 
@@ -9,7 +14,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "akkva";
       repo = "gwfox";
-      rev = "2ea734ce0ee65b31bcc57a58a8956c0db9a15f2c"; # "2.7.19";
+      rev = "2ea734ce0ee65b31bcc57a58a8956c0db9a15f2c"; # 2.7.19
       sha256 = "sha256-p8eNbGNy/sxMBJ0GEJ3sFMCCehqMwrzs9rhFb6Vg6pY=";
     };
 
@@ -22,11 +27,12 @@ let
       cp -r . $out/
     '';
   };
-in {
+in
+{
   programs.firefox = {
     enable = true;
 
-    languagePacks = ["en-US"];
+    languagePacks = [ "en-US" ];
 
     policies = {
       BlockAboutConfig = true;
@@ -54,67 +60,99 @@ in {
       };
 
       search = {
-        default = "DuckDuckGo";
+        default = "ddg";
         force = true;
         engines = {
-          # don't need these default ones
-          "Amazon.com".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
+          "amazondotcom-us".metaData.hidden = true;
+          "bing".metaData.hidden = true;
+          "ebay".metaData.hidden = true;
 
-          "DuckDuckGo" = {
-            urls = [{
-              template = "https://duckduckgo.com";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
+          "ddg" = {
+            urls = [
+              {
+                template = "https://duckduckgo.com";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",d" ];
           };
-          "Google" = {
-            urls = [{
-              template = "https://google.com/search";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
+          "google" = {
+            urls = [
+              {
+                template = "https://google.com/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",g" ];
           };
-          "Nix Packages" = {
-            urls = [{
-              template = "https://search.nixos.org/packages";
-              params = [
-                { name = "type"; value = "packages"; }
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
+          "nixpkgs" = {
+            urls = [
+              {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  {
+                    name = "type";
+                    value = "packages";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",ns" ];
           };
-          "YouTube" = {
-            urls = [{
-              template = "https://www.youtube.com/results";
-              params = [
-                { name = "search_query"; value = "{searchTerms}"; }
-              ];
-            }];
+          "youtube" = {
+            urls = [
+              {
+                template = "https://www.youtube.com/results";
+                params = [
+                  {
+                    name = "search_query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",yt" ];
           };
-          "Wikipedia" = {
-            urls = [{
-              template = "https://en.wikipedia.org/wiki/Special:Search";
-              params = [
-                { name = "search"; value = "{searchTerms}"; }
-              ];
-            }];
+          "wikipedia" = {
+            urls = [
+              {
+                template = "https://en.wikipedia.org/wiki/Special:Search";
+                params = [
+                  {
+                    name = "search";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",w" ];
           };
-          "GitHub" = {
-            urls = [{
-              template = "https://github.com/search";
-              params = [
-                { name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
+          "github" = {
+            urls = [
+              {
+                template = "https://github.com/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             definedAliases = [ ",gh" ];
           };
         };
@@ -125,19 +163,22 @@ in {
         settings = [
           {
             name = "GitHub";
-            tags = ["git" "scm"];
+            tags = [
+              "git"
+              "scm"
+            ];
             keyword = "gh";
             url = "https://github.com";
           }
           {
             name = "YouTube";
-            tags = ["entertainment"];
+            tags = [ "entertainment" ];
             keyword = "yo";
             url = "https://youtube.com";
           }
           {
             name = "ChatGPT";
-            tags = ["llm"];
+            tags = [ "llm" ];
             keyword = "ch";
             url = "https://chatgpt.com";
           }

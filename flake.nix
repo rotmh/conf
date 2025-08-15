@@ -23,6 +23,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,20 +44,32 @@
   };
 
   outputs =
-    inputs@{ nixpkgs, ... }:
+    inputs@{
+      self,
+      nixpkgs,
+      treefmt-nix,
+      ...
+    }:
     let
       system = "x86_64-linux";
 
-      lib' = import ./lib { inherit (nixpkgs) lib; };
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      treefmtEval = treefmt-nix.lib.evalModule pkgs ./lib/treefmt.nix;
     in
     {
+      formatter.${system} = treefmtEval.config.build.wrapper;
+
+      checks.${system}.style = treefmtEval.config.build.check self;
+
       nixosConfigurations = {
         flamingo = nixpkgs.lib.nixosSystem {
           inherit system;
 
-          specialArgs = {
-            inherit inputs lib';
-          };
+          specialArgs = { inherit inputs; };
 
           modules = [
             ./hosts/flamingo

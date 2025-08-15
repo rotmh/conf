@@ -10,29 +10,25 @@
     ./impermanence.nix
     ./helix.nix
     ./git.nix
+    ./fish.nix
+    ./starship.nix
+    ./vlc.nix
+    ./sops.nix
+    ./gpg.nix
+    ./ssh.nix
+    # ./dev
   ];
 
   home.packages = with pkgs; [
     tofi
     avizo
+
+    stremio
+    spotify
+    tor-browser-bundle-bin
   ];
 
   programs.nh.enable = true;
-
-  programs.starship = {
-    enable = true;
-
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-
-    enableTransience = true;
-
-    settings = {
-      add_newline = true;
-    };
-  };
-
-  services.ssh-agent.enable = true;
 
   home.stateVersion = "25.05";
 }
