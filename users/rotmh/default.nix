@@ -49,6 +49,7 @@ in
   programs.hyprland.enable = true;
 
   home-manager = {
+    backupFileExtension = "home-manager-backup";
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
