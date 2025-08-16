@@ -9,6 +9,7 @@ in
     ./audio.nix
     ./console.nix
     ./sops.nix
+    ./gpg.nix
     ./network.nix
   ];
 
