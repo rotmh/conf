@@ -26,6 +26,9 @@ in
 
       ".mozilla"
       ".cache/mozilla"
+
+      ".stremio-server"
+      ".local/share/Smart\ Code\ ltd/Stremio"
     ];
     files = [
       "Justfile"
