@@ -237,6 +237,7 @@
 
         follow_mouse = 1;
         kb_layout = "us,il";
+        kb_options = "caps:swapescape";
         repeat_delay = 300;
         repeat_rate = 60;
       };
