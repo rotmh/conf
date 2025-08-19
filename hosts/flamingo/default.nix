@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 let
   host = "flamingo";
 in
@@ -11,6 +11,7 @@ in
     ./sops.nix
     ./gpg.nix
     ./network.nix
+    ./interception
   ];
 
   networking.hostName = host;
@@ -28,13 +29,6 @@ in
 
   services.libinput.enable = true;
   services.openssh.enable = true;
-
-  services.interception-tools = {
-    enable = true;
-    plugins = with pkgs.interception-tools-plugins; [
-      caps2esc
-    ];
-  };
 
   nix = {
     settings = {
