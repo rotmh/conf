@@ -5,4 +5,4 @@ default-host := "flamingo"
 alias s := switch-system
 
 switch-system host=default-host:
-    nh os switch -H {{host}} .
+    nh os switch -H {{host}} . -- --accept-flake-config
