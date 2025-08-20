@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  pkgs',
   config,
   ...
 }:
@@ -52,7 +53,7 @@ in
     backupFileExtension = "home-manager-backup";
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs pkgs'; };
     users.${user.username} = import ./home;
   };
 }

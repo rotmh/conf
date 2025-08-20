@@ -69,6 +69,11 @@
         config.allowUnfree = true;
       };
 
+      pkgs' = nixpkgs.lib.packagesFromDirectoryRecursive {
+        callPackage = nixpkgs.lib.callPackageWith pkgs;
+        directory = ./pkgs;
+      };
+
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./lib/treefmt.nix;
     in
     {
@@ -80,7 +85,7 @@
         flamingo = nixpkgs.lib.nixosSystem {
           inherit system;
 
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs pkgs'; };
 
           modules = [
             ./hosts/flamingo
