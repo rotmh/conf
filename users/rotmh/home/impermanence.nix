@@ -28,7 +28,9 @@ in
       ".cache/mozilla"
 
       ".stremio-server"
-      ".local/share/Smart\ Code\ ltd/Stremio"
+      ".local/share/Smart Code ltd/Stremio"
+
+      ".password-store"
     ];
     files = [
       "Justfile"
