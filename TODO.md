@@ -6,5 +6,5 @@
 
 ## Enhancements
 
-- [ ] set up hyprcursor.
+- [x] set up hyprcursor.
 - [x] set up hyprpaper.
