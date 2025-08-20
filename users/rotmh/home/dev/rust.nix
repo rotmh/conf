@@ -1,6 +1,6 @@
 {
-  pkgs,
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -13,7 +13,7 @@
       "rustc"
       "rustfmt"
     ])
-    rust-analyzer-nightly
+    (inputs.fenix.packages.${system}.rust-analyzer)
 
     cargo-expand
     cargo-watch

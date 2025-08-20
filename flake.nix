@@ -35,10 +35,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # fenix = {
-    #   url = "github:nix-community/fenix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     helix-git.url = "github:helix-editor/helix";
   };
@@ -64,7 +64,7 @@
     let
       system = "x86_64-linux";
 
-      pkgs = import inputs.nixpkgs {
+      pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
