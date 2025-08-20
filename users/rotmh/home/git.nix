@@ -16,7 +16,7 @@ in
     signing = {
       signByDefault = true;
 
-      key = "FA5492BE76A4974A";
+      key = user.gpg;
     };
 
     extraConfig = {

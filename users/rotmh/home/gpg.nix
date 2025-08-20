@@ -5,6 +5,17 @@
   ...
 }:
 {
+  sops.secrets = {
+    "gpg/private-key" = {
+      sopsFile = ../secrets/system.yaml;
+      mode = "0400";
+    };
+    "gpg/public-key" = {
+      sopsFile = ../secrets/system.yaml;
+      mode = "0444";
+    };
+  };
+
   programs.gpg = {
     enable = true;
   };

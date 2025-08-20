@@ -1,13 +1,14 @@
 { pkgs, ... }:
 {
   imports = [
+    ./impermanence.nix
+
     ./alacritty.nix
     ./hyprland
     ./zoxide.nix
     ./firefox
     ./waybar
     ./fonts.nix
-    ./impermanence.nix
     ./helix.nix
     ./git.nix
     ./fish.nix
@@ -16,7 +17,8 @@
     ./sops.nix
     ./gpg.nix
     ./ssh.nix
-    # ./dev
+    ./pass.nix
+    ./dev
   ];
 
   home.packages = with pkgs; [
