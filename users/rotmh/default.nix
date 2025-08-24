@@ -34,6 +34,8 @@ in
       just
       tree
       coreutils
+      man-pages
+      man-pages-posix
       curl
 
       # remove these

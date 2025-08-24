@@ -11,6 +11,7 @@ in
     ./sops.nix
     ./gpg.nix
     ./network.nix
+    ./tlp.nix
     ./interception
   ];
 
@@ -29,6 +30,8 @@ in
 
   services.libinput.enable = true;
   services.openssh.enable = true;
+
+  services.thermald.enable = true;
 
   nix = {
     settings = {
