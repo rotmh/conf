@@ -6,7 +6,7 @@
     ./alacritty.nix
     ./hyprland
     ./zoxide.nix
-    ./firefox
+    ./firefox.nix
     ./waybar
     ./fonts.nix
     ./helix.nix
