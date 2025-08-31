@@ -29,7 +29,14 @@
     stremio
     spotify
     tor-browser-bundle-bin
+
+    chafa
+    ueberzugpp
   ];
+
+  programs.bat.enable = true;
+  programs.yazi.enable = true;
+  programs.eza.enable = true;
 
   programs.nh.enable = true;
 
