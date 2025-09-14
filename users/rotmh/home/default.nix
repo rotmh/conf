@@ -64,6 +64,8 @@
     enableFishIntegration = true;
   };
 
+  programs.ripgrep.enable = true;
+
   programs.nh.enable = true;
 
   home.stateVersion = "25.05";
