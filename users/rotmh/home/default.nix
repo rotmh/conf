@@ -51,9 +51,14 @@
   };
 
   programs.bat.enable = true;
-  programs.eza.enable = true;
 
   programs.yazi = {
+    enable = true;
+
+    enableFishIntegration = true;
+  };
+
+  programs.eza = {
     enable = true;
 
     enableFishIntegration = true;
