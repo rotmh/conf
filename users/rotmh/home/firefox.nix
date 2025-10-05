@@ -176,6 +176,7 @@ in
           vimium
           refined-github
           simple-translate
+          return-youtube-dislikes
         ];
 
         settings = {
