@@ -25,7 +25,6 @@
     avizo
 
     discord
-    stremio
     spotify
     tor-browser-bundle-bin
 
