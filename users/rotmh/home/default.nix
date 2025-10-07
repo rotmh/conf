@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./impermanence.nix
@@ -21,16 +21,25 @@
     ./dev
   ];
 
-  home.packages = with pkgs; [
-    avizo
+  home.packages =
+    let
+      stremioPkgs = import inputs.nixpkgs-for-stremio {
+        inherit (pkgs) system;
+      };
+    in
+    with pkgs;
+    [
+      (stremioPkgs.stremio)
 
-    discord
-    spotify
-    tor-browser-bundle-bin
+      avizo
 
-    chafa
-    ueberzugpp
-  ];
+      discord
+      spotify
+      tor-browser-bundle-bin
+
+      chafa
+      ueberzugpp
+    ];
 
   programs.tofi = {
     enable = true;
