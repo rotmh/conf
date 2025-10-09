@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs',
+  ...
+}:
 {
   imports = [
     ./impermanence.nix
@@ -31,10 +36,11 @@
     [
       (stremioPkgs.stremio)
 
+      (pkgs'.spotify-spotx)
+
       avizo
 
       discord
-      spotify
       tor-browser-bundle-bin
 
       chafa
