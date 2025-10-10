@@ -9,7 +9,7 @@
     # built by Hydra once marked with known vulnerabilities, we use a pinned,
     # older nixpkgs revision from before that change. This ensures Hydra can
     # provide prebuilt binaries, since building qt5 locally is too heavy.
-    nixpkgs-for-stremio.url = "nixpkgs/5135c59491985879812717f4c9fea69604e7f26f";
+    nixpkgs-for-stremio.url = "nixpkgs/fdaf9ac0214d7dea1b3e573434cd96c0d10c9d76";
 
     home-manager = {
       url = "github:nix-community/home-manager";

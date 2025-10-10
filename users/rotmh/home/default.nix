@@ -30,6 +30,7 @@
     let
       stremioPkgs = import inputs.nixpkgs-for-stremio {
         inherit (pkgs) system;
+        config.allowUnfree = true;
       };
     in
     with pkgs;
