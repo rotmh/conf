@@ -1,3 +1,3 @@
 {
-  wallpaper = ./assets/wallpapers/flamboyance.jpg;
+  wallpaper = ./assets/wallpapers/flamboyance_dark.jpg;
 }
