@@ -30,6 +30,9 @@ in
       ".stremio-server"
       ".local/share/Smart Code ltd/Stremio"
 
+      ".config/spotify"
+      ".cache/spotify"
+
       ".password-store"
     ];
     files = [
