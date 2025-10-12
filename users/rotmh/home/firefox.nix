@@ -7,6 +7,7 @@
 }:
 let
   username = config.home.username;
+  homeDir = config.home.homeDirectory;
 in
 {
   programs.firefox = {
@@ -17,6 +18,7 @@ in
     policies = {
       BlockAboutConfig = true;
       DisableTelemetry = true;
+      DefaultDownloadDirectory = "${homeDir}/downloads";
     };
 
     profiles.${username} = {
