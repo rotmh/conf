@@ -36,8 +36,6 @@ in
       ".password-store"
     ];
     files = [
-      "Justfile"
-
       ".local/share/fish/fish_history"
       ".local/share/zoxide/db.zo"
     ];
