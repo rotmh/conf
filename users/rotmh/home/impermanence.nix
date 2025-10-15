@@ -1,11 +1,25 @@
-{ inputs, config, ... }:
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
 let
   username = config.home.username;
+  symlink = path: {
+    directory = path;
+    method = "symlink";
+  };
 in
 {
   imports = [
     inputs.impermanence.homeManagerModules.default
   ];
+
+  # https://github.com/nix-community/impermanence/issues/256#issue-2825793622
+  home.activation.fixPathForImpermanence = lib.hm.dag.entryBefore [ "cleanEmptyLinkTargets" ] ''
+    PATH=$PATH:/run/wrappers/bin
+  '';
 
   home.persistence."/persistent/home/${username}" = {
     directories = [
@@ -30,14 +44,13 @@ in
       ".stremio-server"
       ".local/share/Smart Code ltd/Stremio"
 
-      ".config/spotify"
-      ".cache/spotify"
+      (symlink ".config/spotify")
+      (symlink ".cache/spotify")
 
       ".password-store"
-    ];
-    files = [
-      ".local/share/fish/fish_history"
-      ".local/share/zoxide/db.zo"
+
+      ".local/share/fish"
+      (symlink ".local/share/zoxide")
     ];
     allowOther = true;
   };
