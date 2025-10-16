@@ -6,7 +6,7 @@ in
   programs.git = {
     enable = true;
 
-    userName = user.username;
+    userName = user.fullname;
     userEmail = user.email;
 
     ignores = [
