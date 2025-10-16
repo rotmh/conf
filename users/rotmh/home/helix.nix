@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 {
   programs.helix = {
     enable = true;
@@ -56,13 +61,20 @@
     };
 
     languages = {
-      language = [
-        {
-          name = "nix";
-          language-servers = [ "nixd" ];
+      language = lib.mapAttrsToList (name: cfg: cfg // { inherit name; }) {
+        nix = {
           auto-format = true;
-        }
-      ];
+        };
+      };
+
+      language-server = {
+        rust-analyzer.config.cargo = {
+          # Make r-a use a different target directory, to prevent from locking
+          # `Cargo.lock` at the expense of duplicating build artifacts.
+          targetDir = true;
+          features = "all";
+        };
+      };
     };
   };
 }
