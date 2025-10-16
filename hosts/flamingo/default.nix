@@ -13,6 +13,7 @@ in
     ./network.nix
     ./tlp.nix
     ./interception
+    ./clamav.nix
   ];
 
   networking.hostName = host;
