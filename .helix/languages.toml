@@ -1,4 +1,4 @@
 [language-server.nixd.config.nixd]
-nixpkgs.expr = "(builtins.getFlake (toString ./.)).inputs.nixpkgs"
+nixpkgs.expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs {}"
 options.nixos.expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.flamingo.options"
 options.home_manager.expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.flamingo.options.home-manager.users.type.getSubOptions []"
