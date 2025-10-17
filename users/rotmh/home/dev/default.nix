@@ -2,9 +2,11 @@
 {
   imports = [
     ./rust.nix
+    ./c.nix
+    ./nix.nix
   ];
 
   home.packages = with pkgs; [
-    gcc
+    gnumake
   ];
 }

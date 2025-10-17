@@ -38,10 +38,6 @@ in
       man-pages-posix
       curl
 
-      # remove these
-      nixd
-      nixfmt-rfc-style
-
       networkmanager
     ];
   };
@@ -52,7 +48,6 @@ in
   programs.hyprland.enable = true;
 
   home-manager = {
-    backupFileExtension = "home-manager-backup";
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs pkgs'; };
