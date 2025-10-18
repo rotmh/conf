@@ -1,12 +1,13 @@
 {
   pkgs,
   pkgs',
+  lib,
   inputs,
   config,
   ...
 }:
 let
-  username = config.home.username;
+  profileName = "default";
   homeDir = config.home.homeDirectory;
 in
 {
@@ -21,7 +22,7 @@ in
       DefaultDownloadDirectory = "${homeDir}/downloads";
     };
 
-    profiles.${username} = {
+    profiles.${profileName} = {
       settings = {
         # Settings for gwfox
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
@@ -44,100 +45,101 @@ in
       search = {
         default = "ddg";
         force = true;
-        engines = {
-          "amazondotcom-us".metaData.hidden = true;
-          "bing".metaData.hidden = true;
-          "ebay".metaData.hidden = true;
-
-          "ddg" = {
-            urls = [
-              {
-                template = "https://duckduckgo.com";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
+        engines =
+          let
+            hiddenEngines = [
+              "amazondotcom-us"
+              "bing"
+              "ebay"
             ];
-            definedAliases = [ ",d" ];
-          };
-          "google" = {
-            urls = [
-              {
-                template = "https://google.com/search";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ ",g" ];
-          };
-          "nixpkgs" = {
-            urls = [
-              {
-                template = "https://search.nixos.org/packages";
-                params = [
-                  {
-                    name = "type";
-                    value = "packages";
-                  }
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ ",ns" ];
-          };
-          "youtube" = {
-            urls = [
-              {
-                template = "https://www.youtube.com/results";
-                params = [
-                  {
-                    name = "search_query";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ ",yt" ];
-          };
-          "wikipedia" = {
-            urls = [
-              {
-                template = "https://en.wikipedia.org/wiki/Special:Search";
-                params = [
-                  {
-                    name = "search";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ ",w" ];
-          };
-          "github" = {
-            urls = [
-              {
-                template = "https://github.com/search";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ ",gh" ];
-          };
-        };
+            mkHidden = name: {
+              name = name;
+              value.metaData.hidden = true;
+            };
+          in
+          {
+            "ddg" = {
+              urls = [
+                {
+                  template = "https://duckduckgo.com";
+                  params = lib.attrsToList {
+                    "q" = "{searchTerms}";
+                  };
+                }
+              ];
+              definedAliases = [ ",d" ];
+            };
+            "google" = {
+              urls = [
+                {
+                  template = "https://google.com/search";
+                  params = lib.attrsToList {
+                    "q" = "{serachTerms}";
+                  };
+                }
+              ];
+              definedAliases = [ ",g" ];
+            };
+            "nixpkgs" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = lib.attrsToList {
+                    "type" = "packages";
+                    "query" = "{searchTerms}";
+                  };
+                }
+              ];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ ",np" ];
+            };
+            "youtube" = {
+              urls = [
+                {
+                  template = "https://www.youtube.com/results";
+                  params = lib.attrsToList {
+                    "search_query" = "{searchTerms}";
+                  };
+                }
+              ];
+              definedAliases = [ ",yt" ];
+            };
+            "wikipedia" = {
+              urls = [
+                {
+                  template = "https://en.wikipedia.org/wiki/Special:Search";
+                  params = lib.attrsToList {
+                    "search" = "{searchTerms}";
+                  };
+                }
+              ];
+              definedAliases = [ ",w" ];
+            };
+            "github" = {
+              urls = [
+                {
+                  template = "https://github.com/search";
+                  params = lib.attrsToList {
+                    "q" = "{serachTerms}";
+                  };
+                }
+              ];
+              definedAliases = [ ",gh" ];
+            };
+            "github-code" = {
+              urls = [
+                {
+                  template = "https://github.com/search";
+                  params = lib.attrsToList {
+                    "q" = "{serachTerms}";
+                    "type" = "code";
+                  };
+                }
+              ];
+              definedAliases = [ ",ghc" ];
+            };
+          }
+          // builtins.listToAttrs (map mkHidden hiddenEngines);
       };
 
       bookmarks = {
@@ -159,8 +161,17 @@ in
             url = "https://youtube.com";
           }
           {
+            name = "Netflix";
+            tags = [ "entertainment" ];
+            keyword = "ne";
+            url = "https://netflix.com";
+          }
+          {
             name = "ChatGPT";
-            tags = [ "llm" ];
+            tags = [
+              "llm"
+              "ai"
+            ];
             keyword = "ch";
             url = "https://chatgpt.com";
           }
@@ -180,12 +191,25 @@ in
           simple-translate
           return-youtube-dislikes
         ];
+      };
 
-        settings = {
+      containersForce = true;
+
+      containers = {
+        "Personal" = {
+          id = 0;
+          color = "blue";
+          icon = "fingerprint";
+        };
+
+        "Guest" = {
+          id = 2;
+          color = "green";
+          icon = "chill";
         };
       };
     };
   };
 
-  home.file.".mozilla/firefox/${username}/chrome".source = "${pkgs'.gwfox}/chrome";
+  home.file.".mozilla/firefox/${profileName}/chrome".source = "${pkgs'.gwfox}/chrome";
 }
