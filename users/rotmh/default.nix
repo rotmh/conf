@@ -17,6 +17,7 @@ in
   users.groups.${user.group} = { };
   users.users.${user.username} = {
     name = user.username;
+    description = user.fullname;
     group = user.group;
 
     isNormalUser = true;

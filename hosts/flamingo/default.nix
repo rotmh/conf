@@ -1,4 +1,3 @@
-{ ... }:
 let
   host = "flamingo";
 in
