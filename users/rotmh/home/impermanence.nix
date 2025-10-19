@@ -38,9 +38,6 @@ in
       ".local/share/keyrings"
       ".local/share/direnv"
 
-      ".mozilla"
-      ".cache/mozilla"
-
       ".stremio-server"
       ".local/share/Smart Code ltd/Stremio"
 

@@ -11,7 +11,7 @@
     ./alacritty.nix
     ./hyprland
     ./zoxide.nix
-    ./firefox.nix
+    ./firefox
     ./waybar
     ./fonts.nix
     ./helix.nix
