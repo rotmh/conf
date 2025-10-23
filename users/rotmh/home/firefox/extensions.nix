@@ -112,8 +112,4 @@
   youtube-shorts-block = {
     id = "{34daeb50-c2d2-4f14-886a-7160b24d66a4}";
   };
-
-  multi-account-containers = {
-    id = "@testpilot-containers";
-  };
 }

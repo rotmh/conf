@@ -17,7 +17,6 @@ in
 
   programs.firefox = {
     enable = true;
-    package = import ./package.nix { inherit pkgs; };
 
     languagePacks = [ "en-US" ];
 
@@ -48,13 +47,11 @@ in
       search = import ./search.nix { inherit lib; };
       bookmarks = import ./bookmarks.nix;
 
-      containersForce = true;
-      containers = import ./containers.nix;
-
-      # userChrome = "${pkgs'.gwfox}/chrome/userChrome.css";
-      # userContent = "${pkgs'.gwfox}/chrome/userContent.css";
+      userChrome = "${pkgs'.gwfox}/chrome/userChrome.css";
+      userContent = "${pkgs'.gwfox}/chrome/userContent.css";
     };
 
-    profiles.guest.id = 1000;
+    profiles.guest.id = 10;
+    profiles.guest.extensions.force = true;
   };
 }
