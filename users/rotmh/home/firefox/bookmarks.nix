@@ -42,5 +42,10 @@
       keyword = "pm";
       url = "https://mail.proton.me";
     }
+    {
+      name = "WhatsApp";
+      keyword = "wh";
+      url = "https://web.whatsapp.com";
+    }
   ];
 }
