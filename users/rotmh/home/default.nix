@@ -1,52 +1,86 @@
 {
-  inputs,
   pkgs,
-  pkgs',
+  lib,
+  inputs,
   ...
 }:
+let
+  ns = import ../../../modules/namespace.nix;
+in
 {
   imports = [
-    ./impermanence.nix
+    ../../../modules/home-manager
 
-    ./alacritty.nix
     ./hyprland
-    ./zoxide.nix
-    ./firefox
     ./waybar
-    ./fonts.nix
-    ./helix.nix
-    ./git.nix
-    ./fish.nix
-    ./starship.nix
     ./vlc.nix
-    ./sops.nix
-    ./gpg.nix
-    ./ssh.nix
-    ./pass.nix
     ./dev
   ];
 
-  home.packages =
-    let
-      stremioPkgs = import inputs.nixpkgs-for-stremio {
-        inherit (pkgs) system;
-        config.allowUnfree = true;
-      };
-    in
-    with pkgs;
-    [
-      (stremioPkgs.stremio)
+  ${ns} = {
+    user = {
+      fullname = "Rotem Horesh";
+      email = "rotmh@proton.me";
+      gpg = "B9106DFDF57A3F5A";
+      editor = lib.getExe inputs.helix-git.packages.${pkgs.system}.default;
+    };
 
-      (pkgs'.spotify-spotx)
+    fonts = {
+      monospace = "JetBrainsMonoNL Nerd Font";
 
-      avizo
+      packages = with pkgs; [
+        nerd-fonts.jetbrains-mono
+      ];
+    };
 
-      discord
-      tor-browser-bundle-bin
+    impermanence = {
+      enable = true;
 
-      chafa
-      ueberzugpp
-    ];
+      directories.symlink = [
+        "projects"
+        "forks"
+        "conf"
+        "bin"
+        "media"
+        "downloads"
+        "documents"
+      ];
+    };
+
+    firefox = {
+      enable = true;
+      createGuestProfile = true;
+    };
+
+    sops.enable = true;
+
+    fish.enable = true;
+    ssh.enable = true;
+    gpg.enable = true;
+    git.enable = true;
+
+    alacritty.enable = true;
+    helix.enable = true;
+    password-store.enable = true;
+    stremio.enable = true;
+    hledger.enable = true;
+    zoxide.enable = true;
+    starship.enable = true;
+  };
+
+  home.packages = with pkgs; [
+    avizo
+
+    discord
+    tor-browser-bundle-bin
+
+    chafa
+    ueberzugpp
+
+    syncthing
+  ];
+
+  programs.asciinema.enable = true;
 
   programs.tofi = {
     enable = true;

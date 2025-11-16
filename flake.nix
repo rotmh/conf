@@ -101,5 +101,7 @@
           ];
         };
       };
+
+      homeManagerModules.default = import ./modules/home-manager;
     };
 }

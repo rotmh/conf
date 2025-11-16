@@ -6,10 +6,6 @@
 }:
 let
   username = config.home.username;
-  symlink = path: {
-    directory = path;
-    method = "symlink";
-  };
 in
 {
   imports = [
@@ -32,22 +28,6 @@ in
       "media"
       "downloads"
       "documents"
-
-      ".gnupg"
-      ".ssh"
-      ".local/share/keyrings"
-      ".local/share/direnv"
-
-      ".stremio-server"
-      ".local/share/Smart Code ltd/Stremio"
-
-      (symlink ".config/spotify")
-      (symlink ".cache/spotify")
-
-      ".password-store"
-
-      ".local/share/fish"
-      (symlink ".local/share/zoxide")
     ];
     allowOther = true;
   };

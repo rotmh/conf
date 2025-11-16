@@ -90,4 +90,9 @@
         builtins.readFile "${src}/panda.toml";
     };
   };
+
+  # Reload the configs of all active Helix instances.
+  xdg.configFile."helix/config.toml".onChange = ''
+    ${lib.getExe' pkgs.procps "pkill"} -u $USER -USR1 hx || true
+  '';
 }
