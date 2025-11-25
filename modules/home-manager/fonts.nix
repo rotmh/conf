@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.fonts;
 in
@@ -13,7 +18,7 @@ in
 
     packages = lib.mkOption {
       default = [ ];
-      type = with lib.types; listOf [ package ];
+      type = with lib.types; listOf package;
       example = lib.literalExpression ''
         [ nerd-fonts.jetbrains-mono ]
       '';

@@ -8,7 +8,7 @@
   programs.helix = {
     enable = true;
 
-    package = inputs.helix-git.packages.${pkgs.system}.default;
+    package = inputs.helix-git.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     defaultEditor = true;
 

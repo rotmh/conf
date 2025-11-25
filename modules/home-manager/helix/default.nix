@@ -2,11 +2,12 @@
   inputs,
   pkgs,
   lib,
+  lib',
   config,
   ...
 }:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.helix;
 in
@@ -19,7 +20,7 @@ in
     programs.helix = {
       enable = true;
 
-      package = inputs.helix-git.packages.${pkgs.system}.default;
+      package = inputs.helix-git.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       defaultEditor = true;
 

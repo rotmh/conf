@@ -27,7 +27,7 @@ in
         force = true;
         packages =
           let
-            exts = inputs.firefox-addons.packages.${pkgs.system};
+            exts = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
           in
           map (ext: exts.${ext}) (builtins.attrNames extensions);
         settings =

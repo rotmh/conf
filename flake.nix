@@ -81,6 +81,17 @@
         directory = ./pkgs;
       };
 
+      lib' = {
+        modulesNamespace = "custom";
+
+        types = {
+          secret = pkgs.lib.types.submodule {
+            path = pkgs.lib.types.path;
+            mode = pkgs.lib.types.str;
+          };
+        };
+      };
+
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./lib/treefmt.nix;
     in
     {
@@ -92,7 +103,7 @@
         flamingo = nixpkgs.lib.nixosSystem {
           inherit system;
 
-          specialArgs = { inherit inputs pkgs'; };
+          specialArgs = { inherit inputs pkgs' lib'; };
 
           modules = [
             ./hosts/flamingo

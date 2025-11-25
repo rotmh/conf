@@ -1,11 +1,13 @@
 {
+  config,
   pkgs,
   lib,
+  lib',
   inputs,
   ...
 }:
 let
-  ns = import ../../../modules/namespace.nix;
+  ns = lib'.modulesNamespace;
 in
 {
   imports = [
@@ -15,14 +17,24 @@ in
     ./waybar
     ./vlc.nix
     ./dev
+    ./ssh.nix
   ];
+
+  sops.secrets = {
+    "gpg/public-key" = {
+      sopsFile = ../secrets/system.yaml;
+    };
+    "gpg/private-key" = {
+      sopsFile = ../secrets/system.yaml;
+    };
+  };
 
   ${ns} = {
     user = {
       fullname = "Rotem Horesh";
       email = "rotmh@proton.me";
       gpg = "B9106DFDF57A3F5A";
-      editor = lib.getExe inputs.helix-git.packages.${pkgs.system}.default;
+      editor = lib.getExe inputs.helix-git.packages.${pkgs.stdenv.hostPlatform.system}.helix;
     };
 
     fonts = {
@@ -32,6 +44,8 @@ in
         nerd-fonts.jetbrains-mono
       ];
     };
+
+    sops.enable = true;
 
     impermanence = {
       enable = true;
@@ -52,18 +66,26 @@ in
       createGuestProfile = true;
     };
 
-    sops.enable = true;
+    hledger = {
+      enable = true;
+      journal = "~/.hledger.journal";
+    };
+
+    gpg = {
+      enable = true;
+
+      publicKey = config.sops.secrets."gpg/public-key".path;
+      privateKey = config.sops.secrets."gpg/private-key".path;
+    };
 
     fish.enable = true;
-    ssh.enable = true;
-    gpg.enable = true;
+    # ssh.enable = true;
     git.enable = true;
 
     alacritty.enable = true;
     helix.enable = true;
     password-store.enable = true;
     stremio.enable = true;
-    hledger.enable = true;
     zoxide.enable = true;
     starship.enable = true;
   };
@@ -72,7 +94,7 @@ in
     avizo
 
     discord
-    tor-browser-bundle-bin
+    tor-browser
 
     chafa
     ueberzugpp

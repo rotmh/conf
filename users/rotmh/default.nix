@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   pkgs',
+  lib',
   config,
   ...
 }:
@@ -51,7 +52,7 @@ in
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs pkgs'; };
+    extraSpecialArgs = { inherit inputs pkgs' lib'; };
     users.${user.username} = import ./home;
   };
 }

@@ -1,46 +1,56 @@
-{
-  config,
-  lib,
-  ...
-}:
-let
-  ns = import ../namespace.nix;
+{ }
+# {
+#   config,
+#   lib,
+#   lib',
+#   ...
+# }:
+# let
+#   ns = lib'.modulesNamespace;
 
-  homeDir = config.home.homeDirectory;
+#   homeDir = config.home.homeDirectory;
 
-  cfg = config.${ns}.ssh;
-in
-{
-  options.${ns}.ssh = {
-    enable = lib.mkEnableOption "ssh";
-  };
+#   cfg = config.${ns}.ssh;
+# in
+# {
+#   options.${ns}.ssh = {
+#     enable = lib.mkEnableOption "ssh";
 
-  config = lib.mkIf cfg.enable {
-    sops.secrets = {
-      "ssh/private-key" = {
-        sopsFile = ../secrets/system.yaml;
-        path = "${homeDir}/.ssh/id_ed25519";
-        mode = "0400";
-      };
-      "ssh/public-key" = {
-        sopsFile = ../secrets/system.yaml;
-        path = "${homeDir}/.ssh/id_ed25519.pub";
-        mode = "0444";
-      };
-    };
+#     publicKey = lib.mkOption {
+#       type = lib'.types.secret;
+#     };
 
-    services.ssh-agent = {
-      enable = true;
-    };
+#     privateKey = lib.mkOption {
+#       type = lib'.types.secret;
+#     };
+#   };
 
-    programs.ssh = {
-      enable = true;
-    };
+#   config = lib.mkIf cfg.enable {
+#     sops.secrets = {
+#       "ssh/private-key" = {
+#         sopsFile = ../secrets/system.yaml;
+#         path = "${homeDir}/.ssh/id_ed25519";
+#         mode = "0400";
+#       };
+#       "ssh/public-key" = {
+#         sopsFile = ../secrets/system.yaml;
+#         path = "${homeDir}/.ssh/id_ed25519.pub";
+#         mode = "0444";
+#       };
+#     };
 
-    home.file.".ssh/known_hosts".text = ''
-      github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
-      github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
-      github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
-    '';
-  };
-}
+#     services.ssh-agent = {
+#       enable = true;
+#     };
+
+#     programs.ssh = {
+#       enable = true;
+#     };
+
+#     home.file.".ssh/known_hosts".text = ''
+#       github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+#       github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+#       github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+#     '';
+#   };
+# }

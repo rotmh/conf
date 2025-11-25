@@ -5,7 +5,7 @@
 }:
 {
   home.packages = with pkgs; [
-    (inputs.fenix.packages.${system}.complete.withComponents [
+    (inputs.fenix.packages.${stdenv.hostPlatform.system}.complete.withComponents [
       "cargo"
       "clippy"
       "rust-src"
@@ -13,7 +13,7 @@
       "rustc"
       "rustfmt"
     ])
-    (inputs.fenix.packages.${system}.rust-analyzer)
+    (inputs.fenix.packages.${stdenv.hostPlatform.system}.rust-analyzer)
 
     cargo-expand
     cargo-watch

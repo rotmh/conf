@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.zoxide;
 in
@@ -17,7 +22,7 @@ in
     programs.zoxide = {
       enable = true;
 
-      enableFishIntegration = config.${ns}.fish;
+      enableFishIntegration = config.${ns}.fish.enable;
     };
   };
 }

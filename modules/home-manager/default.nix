@@ -18,5 +18,5 @@ let
 in
 
 {
-  imports = concatLists (map mapEntry entries);
+  imports = concatLists (lib.mapAttrsToList mapEntry entries);
 }

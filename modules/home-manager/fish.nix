@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.fish;
 in
@@ -10,9 +15,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ${ns}.impermanence.directories.symlink = [
-      ".local/share/fish"
-    ];
+    ${ns}.impermanence = {
+      directories.symlink = [
+        # Do we want those?
+        # ".local/share/fish/generated_completions"
+        # ".cache/fish/generated_completions"
+      ];
+
+      files = [
+        ".local/share/fish/fish_history"
+      ];
+    };
 
     programs.fish = {
       enable = true;

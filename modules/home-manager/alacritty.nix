@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.alacritty;
 in

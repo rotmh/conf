@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.starship;
 in
@@ -13,7 +18,7 @@ in
     programs.starship = {
       enable = true;
 
-      enableFishIntegration = config.${ns}.fish;
+      enableFishIntegration = config.${ns}.fish.enable;
 
       enableTransience = true;
 

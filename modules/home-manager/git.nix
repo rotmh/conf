@@ -1,6 +1,11 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  lib',
+  ...
+}:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   user = config.${ns}.user;
 
@@ -15,8 +20,25 @@ in
     programs.git = {
       enable = true;
 
-      userName = user.fullname;
-      userEmail = user.email;
+      settings = {
+        user = {
+          email = user.email;
+          name = user.fullname;
+        };
+
+        core.editor = user.editor;
+
+        init.defaultBranch = "main";
+
+        url = {
+          "ssh://git@github.com" = {
+            insteadOf = "https://github.com";
+          };
+          "ssh://git@gitlab.com" = {
+            insteadOf = "https://gitlab.com";
+          };
+        };
+      };
 
       ignores = [
         ".direnv/"
@@ -26,20 +48,6 @@ in
         signByDefault = true;
 
         key = user.gpg;
-      };
-
-      extraConfig = {
-        core.editor = user.editor;
-
-        init.defaultBranch = "main";
-        url = {
-          "ssh://git@github.com" = {
-            insteadOf = "https://github.com";
-          };
-          "ssh://git@gitlab.com" = {
-            insteadOf = "https://gitlab.com";
-          };
-        };
       };
     };
   };

@@ -1,11 +1,12 @@
 {
   pkgs,
   lib,
+  lib',
   config,
   ...
 }:
 let
-  ns = import ../namespace.nix;
+  ns = lib'.modulesNamespace;
 
   cfg = config.${ns}.hledger;
 in
