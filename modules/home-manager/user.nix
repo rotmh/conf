@@ -23,6 +23,9 @@ in
 
     gpg = lib.mkOption {
       type = lib.types.str;
+      description = ''
+        A GnuPG key ID.
+      '';
     };
 
     editor = lib.mkOption {

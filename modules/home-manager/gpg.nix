@@ -27,6 +27,8 @@ in
     programs.gpg = {
       enable = true;
 
+      mutableKeys = false;
+      mutableTrust = false;
       publicKeys = [
         {
           source = cfg.publicKey;
@@ -35,8 +37,29 @@ in
       ];
     };
 
-    home.activation.importPrivateGpgKey = lib.hm.dag.entryAfter [ "writeBoundary" "importGpgKeys" ] ''
-      ${lib.getExe pkgs.gnupg} --import ${cfg.privateKey}
-    '';
+    systemd.user.services = {
+      import-gpg-keys = {
+        Unit = {
+          Description = "Import GPG secret keys";
+          After = [ "sops-nix.service" ];
+        };
+        Service = {
+          Type = "simple";
+          ExecStart =
+            let
+              importGpgKeys = pkgs.writeShellScript "import-gpg-keys" ''
+                while [ ! -f "${config.programs.gpg.homedir}/pubring.kbx" ]; do
+                  sleep 1;
+                done;
+                ${lib.getExe pkgs.gnupg} --import ${cfg.privateKey}
+              '';
+            in
+            "${importGpgKeys}";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+      };
+    };
   };
 }

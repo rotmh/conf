@@ -21,9 +21,6 @@ in
   ];
 
   sops.secrets = {
-    "gpg/public-key" = {
-      sopsFile = ../secrets/system.yaml;
-    };
     "gpg/private-key" = {
       sopsFile = ../secrets/system.yaml;
     };
@@ -74,7 +71,7 @@ in
     gpg = {
       enable = true;
 
-      publicKey = config.sops.secrets."gpg/public-key".path;
+      publicKey = ../0xB9106DFDF57A3F5A.gpg;
       privateKey = config.sops.secrets."gpg/private-key".path;
     };
 
