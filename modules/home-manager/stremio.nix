@@ -12,7 +12,7 @@ let
   cfg = config.${ns}.stremio;
 
   stremioPkgs = import inputs.nixpkgs-for-stremio {
-    inherit (pkgs) system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
 in
