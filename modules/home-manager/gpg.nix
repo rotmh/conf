@@ -21,6 +21,11 @@ in
     privateKey = lib.mkOption {
       type = lib.types.path;
     };
+
+    passphrase = lib.mkOption {
+      default = null;
+      type = with lib.types; nullOr path;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -51,7 +56,17 @@ in
                 while [ ! -f "${config.programs.gpg.homedir}/pubring.kbx" ]; do
                   sleep 1;
                 done;
-                ${lib.getExe pkgs.gnupg} --import ${cfg.privateKey}
+
+                ${lib.getExe pkgs.gnupg} \
+                  ${
+                    if cfg.passphrase != null then
+                      ''
+                        --pinentry-mode loopback \
+                        --passphrase-file "${cfg.passphrase}" \
+                      ''
+                    else
+                      ""
+                  } --import ${cfg.privateKey}
               '';
             in
             "${importGpgKeys}";

@@ -24,6 +24,9 @@ in
     "gpg/private-key" = {
       sopsFile = ../secrets/system.yaml;
     };
+    "gpg/passphrase" = {
+      sopsFile = ../secrets/system.yaml;
+    };
   };
 
   ${ns} = {
@@ -73,6 +76,7 @@ in
 
       publicKey = ../0xB9106DFDF57A3F5A.gpg;
       privateKey = config.sops.secrets."gpg/private-key".path;
+      passphrase = config.sops.secrets."gpg/passphrase".path;
     };
 
     fish.enable = true;
