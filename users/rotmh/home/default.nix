@@ -11,7 +11,7 @@ let
 in
 {
   imports = [
-    ../../../modules/home-manager
+    inputs.self.homeManagerModules.default
 
     ./hyprland
     ./waybar
