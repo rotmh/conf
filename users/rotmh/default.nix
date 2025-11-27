@@ -54,6 +54,6 @@ in
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs pkgs' lib'; };
     users.${user.username} = import ./home;
-    backupFileExtension = "hmbackup";
+    # backupFileExtension = "hmbackup";
   };
 }
