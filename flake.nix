@@ -71,20 +71,10 @@
         config.allowUnfree = true;
       };
 
-      pkgs' = nixpkgs.lib.packagesFromDirectoryRecursive {
-        callPackage = nixpkgs.lib.callPackageWith pkgs;
-        directory = ./pkgs;
-      };
+      pkgs' = self.packages.${system};
 
       lib' = {
         modulesNamespace = "custom";
-
-        types = {
-          secret = pkgs.lib.types.submodule {
-            path = pkgs.lib.types.path;
-            mode = pkgs.lib.types.str;
-          };
-        };
       };
 
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./lib/treefmt.nix;
@@ -93,6 +83,11 @@
       formatter.${system} = treefmtEval.config.build.wrapper;
 
       checks.${system}.style = treefmtEval.config.build.check self;
+
+      packages.${system} = pkgs.lib.packagesFromDirectoryRecursive {
+        callPackage = pkgs.lib.callPackageWith pkgs;
+        directory = ./pkgs;
+      };
 
       nixosConfigurations = {
         flamingo = nixpkgs.lib.nixosSystem {
