@@ -17,16 +17,14 @@ in
     ./waybar
     ./vlc.nix
     ./dev
-    ./ssh.nix
   ];
 
   sops.secrets = {
-    "gpg/private-key" = {
-      sopsFile = ../secrets/system.yaml;
-    };
-    "gpg/passphrase" = {
-      sopsFile = ../secrets/system.yaml;
-    };
+    "gpg/private-key".sopsFile = ../secrets/system.yaml;
+    "gpg/passphrase".sopsFile = ../secrets/system.yaml;
+
+    "ssh/public-key".sopsFile = ../secrets/system.yaml;
+    "ssh/private-key".sopsFile = ../secrets/system.yaml;
   };
 
   ${ns} = {
@@ -75,14 +73,19 @@ in
       enable = true;
 
       publicKey = ../0xB9106DFDF57A3F5A.gpg;
-      privateKey = config.sops.secrets."gpg/private-key".path;
-      passphrase = config.sops.secrets."gpg/passphrase".path;
+      privateKey = "gpg/private-key";
+      passphrase = "gpg/passphrase";
+    };
+
+    ssh = {
+      enable = true;
+
+      publicKey = "ssh/public-key";
+      privateKey = "ssh/private-key";
     };
 
     fish.enable = true;
-    # ssh.enable = true;
     git.enable = true;
-
     alacritty.enable = true;
     helix.enable = true;
     password-store.enable = true;

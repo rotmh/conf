@@ -23,8 +23,6 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,7 +58,6 @@
     inputs@{
       self,
       nixpkgs,
-      treefmt-nix,
       ...
     }:
     let
@@ -72,18 +69,9 @@
       };
 
       pkgs' = self.packages.${system};
-
-      lib' = {
-        modulesNamespace = "custom";
-      };
-
-      treefmtEval = treefmt-nix.lib.evalModule pkgs ./lib/treefmt.nix;
+      lib' = import ./lib { inherit pkgs; };
     in
     {
-      formatter.${system} = treefmtEval.config.build.wrapper;
-
-      checks.${system}.style = treefmtEval.config.build.check self;
-
       packages.${system} = pkgs.lib.packagesFromDirectoryRecursive {
         callPackage = pkgs.lib.callPackageWith pkgs;
         directory = ./pkgs;

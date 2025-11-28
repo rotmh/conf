@@ -50,6 +50,9 @@
     ];
   };
 
+  # NOTE: It seems like there is no way to prevent vimium-c from
+  # showing a welcome page with the settings. The only option is
+  # patching the extension's code itself.
   vimium-c = {
     id = "vimium-c@gdh1995.cn";
     privateAllowed = true;
@@ -126,12 +129,16 @@
     id = "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}";
     settings = {
       welcomed = true;
-      personalToken = "";
+      # personalToken = "";
     };
   };
 
   return-youtube-dislikes = {
     id = "{762f9885-5a13-4abd-9c77-433dcd38b8fd}";
+    settings = {
+      "lastShownChangelogVersion" = "please don't show me the changelog on install";
+      "pendingChangelogVersion" = "please don't show me the changelog on install";
+    };
   };
 
   youtube-shorts-block = {

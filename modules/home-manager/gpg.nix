@@ -19,16 +19,23 @@ in
     };
 
     privateKey = lib.mkOption {
-      type = lib.types.path;
+      type = lib'.types.sopsKey;
     };
 
     passphrase = lib.mkOption {
       default = null;
-      type = with lib.types; nullOr path;
+      type = lib.types.nullOr lib'.types.sopsKey;
     };
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !cfg.enable || config.${ns}.sops.enable;
+        message = "`${ns}.gpg.enable = true` requires `${ns}.sops.enable = true`.";
+      }
+    ];
+
     programs.gpg = {
       enable = true;
 
@@ -62,11 +69,11 @@ in
                     if cfg.passphrase != null then
                       ''
                         --pinentry-mode loopback \
-                        --passphrase-file "${cfg.passphrase}" \
+                        --passphrase-file "${config.sops.secrets.${cfg.passphrase}.path}" \
                       ''
                     else
                       ""
-                  } --import ${cfg.privateKey}
+                  } --import "${config.sops.secrets.${cfg.privateKey}.path}"
               '';
             in
             "${importGpgKeys}";
