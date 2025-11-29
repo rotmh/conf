@@ -17,7 +17,7 @@ in
   config = lib.mkIf cfg.enable {
     ${ns}.impermanence = {
       directories.symlink = [
-        # Do we want those?
+        # Do we want these?
         # ".local/share/fish/generated_completions"
         # ".cache/fish/generated_completions"
       ];

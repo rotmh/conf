@@ -212,8 +212,6 @@
 
     settings = {
       exec-once = [
-        "${lib.getExe pkgs.clipse} -listen"
-
         # https://github.com/nix-community/home-manager/issues/7242#issuecomment-2961230589
         "systemctl --user start hyprpaper"
       ];

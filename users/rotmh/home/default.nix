@@ -83,6 +83,7 @@ in
       privateKey = "ssh/private-key";
     };
 
+    clipse.enable = true;
     fish.enable = true;
     git.enable = true;
     alacritty.enable = true;

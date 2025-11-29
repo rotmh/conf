@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   imports = [
     ./hyprland.nix
@@ -7,9 +6,4 @@
   ];
 
   services.avizo.enable = true;
-
-  home.packages = with pkgs; [
-    clipse
-    wl-clipboard
-  ];
 }
