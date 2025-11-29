@@ -17,12 +17,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ${ns}.impermanence.directories.symlink = [
-      # Cache
-      ".stremio-server"
-      # Credentials (user auth) among others
-      ".local/share/.stremio-wrapped"
-    ];
+    ${ns}.impermanence.directories = {
+      symlink = [
+        # Cache
+        ".stremio-server"
+      ];
+      bindfs = [
+        # Credentials (user auth) among others
+        ".local/share/stremio"
+      ];
+    };
 
     home.packages = [
       inputs.nixohess.packages.${pkgs.stdenv.hostPlatform.system}.stremio-linux-shell
