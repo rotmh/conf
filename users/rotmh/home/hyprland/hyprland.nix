@@ -93,9 +93,14 @@
         # ", PRINT, exec, hyprshot -m output"
         # "$mainMod SHIFT, PRINT, exec, hyprshot -m region"
 
-        # https://www.reddit.com/r/hyprland/comments/11c2lie/comment/jak96fw/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-        # "bindm = $mainMod, mouse:272, movewindow"
-        # "bindm = $mainMod, mouse:273, resizewindow"
+        # Move windows
+        "bindm = $mainMod, mouse:272, movewindow"
+        "bindm = $mainMod, mouse:273, resizeactive"
+        # https://www.reddit.com/r/hyprland/comments/11c2lie/comment/jak96fw
+        "bind = $mainMod SHIFT, H, movewindow, l"
+        "bind = $mainMod SHIFT, L, movewindow, r"
+        "bind = $mainMod SHIFT, K, movewindow, u"
+        "bind = $mainMod SHIFT, J, movewindow, d"
       ];
 
       binde = [
@@ -207,7 +212,6 @@
 
     settings = {
       exec-once = [
-        "${lib.getExe pkgs.waybar}"
         "${lib.getExe pkgs.clipse} -listen"
 
         # https://github.com/nix-community/home-manager/issues/7242#issuecomment-2961230589
