@@ -92,6 +92,8 @@ in
     stremio.enable = true;
     zoxide.enable = true;
     starship.enable = true;
+
+    vscode.enable = true;
   };
 
   home.packages = with pkgs; [
