@@ -17,6 +17,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    ${ns}.impermanence.directories.symlink = [
+      # https://github.com/helix-editor/helix/issues/13737#issuecomment-3018165376
+      ".cache/nix"
+    ];
+
     programs.helix = {
       enable = true;
 
