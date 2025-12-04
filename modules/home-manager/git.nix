@@ -27,8 +27,8 @@ in
         };
 
         core.editor = user.editor;
-
         init.defaultBranch = "main";
+        blame.ignoreRevsFile = ".git-blame-ignore-revs";
 
         url = {
           "ssh://git@github.com" = {
@@ -38,15 +38,14 @@ in
             insteadOf = "https://gitlab.com";
           };
         };
-      };
 
-      ignores = [
-        ".direnv/"
-      ];
+        alias = {
+          ll = "log --graph --date='short' --color=always --pretty=format:'%Cgreen%h %Cred%<(15,trunc)%an %Cblue%cd %Creset%s'";
+        };
+      };
 
       signing = {
         signByDefault = true;
-
         key = user.gpg;
       };
     };
