@@ -49,7 +49,7 @@
           };
         };
         "clock" = {
-          "format" = "{=%b %d  %H=%M}";
+          "format" = "{:%b %d  %H:%M}";
           "tooltip" = false;
         };
         "pulseaudio" = {
