@@ -47,15 +47,20 @@ in
     impermanence = {
       enable = true;
 
-      directories.symlink = [
-        "projects"
-        "forks"
-        "conf"
-        "bin"
-        "media"
-        "downloads"
-        "documents"
-      ];
+      directories = {
+        symlink = [
+          "projects"
+          "forks"
+          "conf"
+          "bin"
+          "media"
+          "downloads"
+          "documents"
+        ];
+        bindfs = [
+          "VirtualBox VMs"
+        ];
+      };
     };
 
     firefox = {
@@ -92,6 +97,7 @@ in
     stremio.enable = true;
     zoxide.enable = true;
     starship.enable = true;
+    direnv.enable = true;
 
     vscode.enable = true;
   };

@@ -21,11 +21,21 @@ in
 
       profiles = {
         "default" = {
+          userSettings = {
+            "extensions.experimental.affinity" = {
+              "asvetliakov.vscode-neovim" = 1;
+            };
+          };
+
           extensions = with pkgs.vscode-extensions; [
             asvetliakov.vscode-neovim
           ];
         };
       };
     };
+
+    home.packages = with pkgs; [
+      neovim
+    ];
   };
 }

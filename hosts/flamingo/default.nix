@@ -33,6 +33,20 @@ in
 
   services.thermald.enable = true;
 
+  virtualisation.virtualbox.host.enable = true;
+
+  virtualisation.libvirtd = {
+    enable = true;
+
+    # Enable TPM emulation (for Windows 11)
+    qemu = {
+      swtpm.enable = true;
+    };
+  };
+
+  # Enable USB redirection
+  virtualisation.spiceUSBRedirection.enable = true;
+
   nix = {
     settings = {
       trusted-users = [ "@wheel" ];
