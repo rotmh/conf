@@ -92,5 +92,13 @@
       };
 
       homeManagerModules.default = import ./modules/home-manager;
+
+      maintainers = {
+        rotmh = {
+          name = "Rotem Horesh";
+          github = "rotmh";
+          githubId = 148942120;
+        };
+      };
     };
 }
