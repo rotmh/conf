@@ -32,6 +32,8 @@ in
 
   services.thermald.enable = true;
 
+  services.upower.enable = true;
+
   virtualisation.virtualbox.host.enable = true;
 
   virtualisation.libvirtd = {

@@ -98,4 +98,8 @@
   # Don't create $HOME/Downloads dir.
   "browser.download.folderList" = 2;
   "browser.download.dir" = "${config.home.homeDirectory}/downloads";
+
+  "media.ffmpeg.vaapi.enabled" = true;
+  "media.ffvpx.enabled" = false;
+  "gfx.webrender.all" = true;
 }

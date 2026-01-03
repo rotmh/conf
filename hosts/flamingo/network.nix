@@ -29,6 +29,8 @@
   networking.networkmanager = {
     enable = true;
 
+    wifi.powersave = true;
+
     ensureProfiles = {
       environmentFiles = [ config.sops.templates."wifi.env".path ];
 
