@@ -93,19 +93,6 @@ in
           };
         };
       };
-
-      themes = {
-        panda =
-          let
-            src = pkgs.fetchFromGitHub {
-              owner = "blindseerstudios";
-              repo = "panda_helix_theme";
-              rev = "d809d6ac914c32e78bf8e1dd1dba4b7587a9c1db";
-              sha256 = "sha256-hLKtMYP35Uvteigi9sgxgwFFDHyr3czpQhY4OV6619I=";
-            };
-          in
-          "${src}/panda.toml";
-      };
     };
 
     # Reload the configs of all active Helix instances.
