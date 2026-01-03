@@ -6,7 +6,6 @@ in
     ./impermanence.nix
     ./bluetooth.nix
     ./audio.nix
-    ./console.nix
     ./sops.nix
     ./gpg.nix
     ./network.nix
