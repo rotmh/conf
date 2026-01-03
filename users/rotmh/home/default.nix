@@ -118,6 +118,8 @@ in
 
   programs.asciinema.enable = true;
 
+  services.dunst.enable = true;
+
   programs.tofi = {
     enable = true;
 
