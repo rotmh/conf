@@ -59,6 +59,8 @@ in
         ];
         bindfs = [
           "VirtualBox VMs"
+
+          ".local/state/wireplumber"
         ];
       };
     };
