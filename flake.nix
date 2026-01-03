@@ -91,7 +91,7 @@
         };
       };
 
-      homeManagerModules.default = import ./modules/home-manager;
+      homeManagerModules.default = import ./modules/home-manager { inherit inputs pkgs' lib'; };
 
       maintainers = {
         rotmh = {

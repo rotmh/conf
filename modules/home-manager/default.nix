@@ -1,3 +1,8 @@
+{
+  inputs,
+  lib',
+  pkgs',
+}:
 { lib, ... }:
 
 with builtins;
@@ -18,5 +23,13 @@ let
 in
 
 {
+  _module.args = {
+    inherit
+      inputs
+      lib'
+      pkgs'
+      ;
+  };
+
   imports = concatLists (lib.mapAttrsToList mapEntry entries);
 }
