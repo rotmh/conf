@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    ./rust.nix
     ./c.nix
     ./nix.nix
     ./go.nix

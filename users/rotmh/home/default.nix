@@ -42,6 +42,10 @@ in
       ];
     };
 
+    dev = {
+      rust.enable = true;
+    };
+
     sops.enable = true;
 
     impermanence = {
@@ -115,6 +119,8 @@ in
   programs.asciinema.enable = true;
 
   services.dunst.enable = true;
+
+  services.kdeconnect.enable = true;
 
   programs.tofi = {
     enable = true;
