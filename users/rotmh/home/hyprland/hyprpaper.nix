@@ -6,8 +6,12 @@ in
     enable = true;
 
     settings = {
-      preload = [ "${info.wallpaper}" ];
-      wallpaper = [ ",${info.wallpaper}" ];
+      wallpaper = [
+        {
+          monitor = "";
+          path = toString info.wallpaper;
+        }
+      ];
     };
   };
 }
