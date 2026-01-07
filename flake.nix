@@ -40,7 +40,7 @@
 
     helix-git.url = "github:helix-editor/helix";
 
-    nixohess.url = "gitlab:fazzi/nixohess";
+    nixohess.url = "gitlab:fazzi/nixohess/d0ff650b5ab405064cd76ec7911b8877a1a80a09";
   };
 
   nixConfig = {
