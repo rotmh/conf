@@ -47,22 +47,18 @@ in
     impermanence = {
       enable = true;
 
-      directories = {
-        symlink = [
-          "projects"
-          "forks"
-          "conf"
-          "bin"
-          "media"
-          "downloads"
-          "documents"
-        ];
-        bindfs = [
-          "VirtualBox VMs"
+      directories = [
+        "projects"
+        "forks"
+        "conf"
+        "bin"
+        "media"
+        "downloads"
+        "documents"
+        "VirtualBox VMs"
 
-          ".local/state/wireplumber"
-        ];
-      };
+        ".local/state/wireplumber"
+      ];
     };
 
     firefox = {

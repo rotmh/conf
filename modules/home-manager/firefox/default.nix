@@ -36,7 +36,7 @@ in
         profile = ".mozilla/firefox/${cfg.defaultProfileName}";
       in
       {
-        directories.symlink = [
+        directories = [
           "${profile}/storage/default/"
         ];
 

@@ -18,7 +18,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ${ns}.impermanence.directories.symlink = [
+    ${ns}.impermanence.directories = [
       ".password-store"
     ];
 
