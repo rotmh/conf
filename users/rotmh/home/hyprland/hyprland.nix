@@ -112,105 +112,7 @@
         ", XF86AudioMute, exec, volumectl toggle-mute"
         ", XF86AudioMicMute, exec, volumectl -m toggle-mute"
       ];
-    };
 
-    # -- Submaps --
-    extraConfig = ''
-      bind = SHIFT, SPACE, submap, main
-      submap = main
-
-        bind = , V, exec, $terminal start clipse --class clipse
-        bind = , V, submap, reset
-
-        bind = , W, exec, $terminal
-        bind = , W, submap, reset
-
-        bind = , U, exec, $menu
-        bind = , U, submap, reset
-
-        bind = , E, exec, $browser
-        bind = , E, submap, reset
-
-        bind = , T, exec, tor-browser
-        bind = , T, submap, reset
-
-        bind = , F, fullscreen, 0
-        bind = , C, killactive
-
-        bind = , H, movefocus, l
-        bind = , J, movefocus, d
-        bind = , K, movefocus, u
-        bind = , L, movefocus, r
-
-        bind = , left, movefocus, l
-        bind = , down, movefocus, d
-        bind = , up, movefocus, u
-        bind = , right, movefocus, r
-
-        bind = , 1, workspace, 1
-        bind = , 2, workspace, 2
-        bind = , 3, workspace, 3
-        bind = , 4, workspace, 4
-        bind = , 5, workspace, 5
-        bind = , 6, workspace, 6
-        bind = , 7, workspace, 7
-        bind = , 8, workspace, 8
-        bind = , 9, workspace, 9
-        bind = , 0, workspace, 10
-
-        bind = , G, submap, goto
-        bind = SHIFT, G, submap, goto
-        submap = goto
-          bind = , A, workspace, 1
-          bind = , S, workspace, 2
-          bind = , D, workspace, 3
-          bind = , F, workspace, 4
-          bind = , G, workspace, 5
-          bind = , H, workspace, 6
-          bind = , J, workspace, 7
-          bind = , K, workspace, 8
-          bind = , L, workspace, 9
-          bind = , ;, workspace, 10
-
-          bind = , Escape, submap, main
-        submap = main
-
-        bind = , M, submap, move
-        submap = move
-          bind = , A, movetoworkspace, 1
-          bind = , S, movetoworkspace, 2
-          bind = , D, movetoworkspace, 3
-          bind = , F, movetoworkspace, 4
-          bind = , G, movetoworkspace, 5
-          bind = , H, movetoworkspace, 6
-          bind = , J, movetoworkspace, 7
-          bind = , K, movetoworkspace, 8
-          bind = , L, movetoworkspace, 9
-          bind = , ;, movetoworkspace, 10
-
-          bind = , Escape, submap, main
-        submap = main
-
-        bind = , R, submap, resize
-        submap = resize
-          binde = , right, resizeactive, 10 0
-          binde = , left, resizeactive, -10 0
-          binde = , up, resizeactive, 0 -10
-          binde = , down, resizeactive, 0 10
-
-          binde = , L, resizeactive, 10 0
-          binde = , H, resizeactive, -10 0
-          binde = , K, resizeactive, 0 -10
-          binde = , J, resizeactive, 0 10
-
-          bind = , Escape, submap, main
-        submap = main
-
-        bind = , Escape, submap, reset
-      submap = reset
-    '';
-
-    settings = {
       exec-once = [
         # https://github.com/nix-community/home-manager/issues/7242#issuecomment-2961230589
         "systemctl --user start hyprpaper"
@@ -252,15 +154,165 @@
       };
 
       layerrule = [
-        "blur, waybar"
-        "blur, dunst"
-        "blur, gtk4-layer-shell"
+        "blur on, match:namespace waybar"
+        "blur on, match:namespace dunst"
+        "blur on, match:namespace gtk4-layer-shell"
       ];
 
       windowrulev2 = [
-        "float, class:(clipse)"
-        "size 622 652, class:(clipse)"
+        "match:class clipse, float on, size 622 652"
       ];
     };
+
+    extraConfig =
+      let
+        mkSubmap =
+          {
+            name,
+            enterBinds,
+            escapeBind ? ", Escape",
+            parent ? "reset",
+            settings ? { },
+            nested ? [ ],
+          }:
+          let
+            patchNested = s: s // { parent = name; };
+            mkNested =
+              s:
+              lib.pipe s [
+                patchNested
+                mkSubmap
+              ];
+            mkEnterBind = b: "bind = ${b}, submap, ${name}";
+          in
+          ''
+            ${lib.concatMapStringsSep "\n" mkEnterBind enterBinds}
+            submap = ${name}
+
+            ${lib.hm.generators.toHyprconf { attrs = settings; }}
+
+            ${lib.concatMapStringsSep "\n" mkNested nested}
+
+            bind = ${escapeBind}, submap, ${parent}
+            submap = ${parent}
+          '';
+      in
+      mkSubmap {
+        name = "general";
+        enterBinds = [ "SHIFT, SPACE" ];
+
+        nested = [
+          {
+            name = "goto";
+            enterBinds = [
+              ", G"
+              "SHIFT, G"
+            ];
+
+            settings = {
+              bind = [
+                ", A, workspace, 1"
+                ", S, workspace, 2"
+                ", D, workspace, 3"
+                ", F, workspace, 4"
+                ", G, workspace, 5"
+                ", H, workspace, 6"
+                ", J, workspace, 7"
+                ", K, workspace, 8"
+                ", L, workspace, 9"
+                ", ;, workspace, 10"
+              ];
+            };
+          }
+
+          {
+            name = "move";
+            enterBinds = [
+              ", M"
+              "SHIFT, M"
+            ];
+
+            settings = {
+              bind = [
+                ", A, movetoworkspace, 1"
+                ", S, movetoworkspace, 2"
+                ", D, movetoworkspace, 3"
+                ", F, movetoworkspace, 4"
+                ", G, movetoworkspace, 5"
+                ", H, movetoworkspace, 6"
+                ", J, movetoworkspace, 7"
+                ", K, movetoworkspace, 8"
+                ", L, movetoworkspace, 9"
+                ", ;, movetoworkspace, 10"
+              ];
+            };
+          }
+
+          {
+            name = "resize";
+            enterBinds = [
+              ", R"
+              "SHIFT, R"
+            ];
+
+            settings = {
+              binde = [
+                ", right, resizeactive, 10 0"
+                ", left, resizeactive, -10 0"
+                ", up, resizeactive, 0 -10"
+                ", down, resizeactive, 0 10"
+
+                ", L, resizeactive, 10 0"
+                ", H, resizeactive, -10 0"
+                ", K, resizeactive, 0 -10"
+                ", J, resizeactive, 0 10"
+              ];
+            };
+          }
+        ];
+
+        settings = {
+          bind = [
+            ", V, exec, $terminal start clipse --class clipse"
+            ", V, submap, reset"
+
+            ", W, exec, $terminal"
+            ", W, submap, reset"
+
+            ", U, exec, $menu"
+            ", U, submap, reset"
+
+            ", E, exec, $browser"
+            ", E, submap, reset"
+
+            ", T, exec, tor-browser"
+            ", T, submap, reset"
+
+            ", F, fullscreen, 0"
+            ", C, killactive"
+
+            ", H, movefocus, l"
+            ", J, movefocus, d"
+            ", K, movefocus, u"
+            ", L, movefocus, r"
+
+            ", left, movefocus, l"
+            ", down, movefocus, d"
+            ", up, movefocus, u"
+            ", right, movefocus, r"
+
+            ", 1, workspace, 1"
+            ", 2, workspace, 2"
+            ", 3, workspace, 3"
+            ", 4, workspace, 4"
+            ", 5, workspace, 5"
+            ", 6, workspace, 6"
+            ", 7, workspace, 7"
+            ", 8, workspace, 8"
+            ", 9, workspace, 9"
+            ", 0, workspace, 10"
+          ];
+        };
+      };
   };
 }
