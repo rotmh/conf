@@ -9,4 +9,5 @@ switch-system host=default-host:
     nh os switch -H {{host}} . -- --accept-flake-config
 
 switch-system-update host=default-host:
+    nix flake update
     nh os switch --update -H {{host}} . -- --accept-flake-config
