@@ -38,6 +38,8 @@ in
       {
         directories = [
           "${profile}/storage/default/"
+
+          ".cache/mozilla/firefox/${cfg.defaultProfileName}"
         ];
 
         files = [
@@ -49,8 +51,6 @@ in
           "${profile}/storage.sqlite"
 
           "${profile}/prefs.js"
-
-          ".cache/mozilla/firefox/${cfg.defaultProfileName}"
         ];
       };
 
