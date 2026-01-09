@@ -44,6 +44,7 @@ in
 
     dev = {
       rust.enable = true;
+      nix.enable = true;
     };
 
     sops.enable = true;
