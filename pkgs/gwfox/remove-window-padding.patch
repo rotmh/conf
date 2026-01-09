@@ -1,22 +1,29 @@
 diff --git a/chrome/userChrome.css b/chrome/userChrome.css
-index 2a50cc7..c4c7659 100644
+index 9eb605a..18dcd1c 100644
 --- a/chrome/userChrome.css
 +++ b/chrome/userChrome.css
-@@ -80,18 +80,6 @@
+@@ -115,25 +115,6 @@
  }
 
  :root:not([inDOMFullscreen], [chromehidden~="toolbar"]) {
 -#tabbrowser-tabbox browser:not(.devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe) {
--  border-radius: 6px;
+-  border-radius: var(--br1);
 -  clip-path: inset(0 round 8px);
 -  background-color: light-dark(#fff, #191919) !important;
 -  -moz-window-dragging: no-drag;
+-@media (-moz-mac-tahoe-theme) {
+-  border-radius: 10px;
+-  clip-path: inset(0 round 12px);
+-}
 -}
 -
 -.browserStack {
--  border-radius: 8px;
--  margin: 0 8px 8px;
--  box-shadow: 0 1.5px 9px light-dark(#00000026, #00000040);
+-  border-radius: var(--br2);
+-  margin: 8px !important;
+-  box-shadow: 0 1px 8px light-dark(#00000026, #00000040);
+-@media (-moz-mac-tahoe-theme) {
+-  border-radius: 12px;
+-}
 -}
 
  #tabbrowser-tabpanels {

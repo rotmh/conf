@@ -11,8 +11,8 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "akkva";
     repo = "gwfox";
-    rev = "a754dedbc66ede897e05e5e911db7604a9328d08";
-    sha256 = "sha256-2OlfCOYvdnIOs3SyGC+cqzsSOFFDKcvmdHk8EvZ7CQg=";
+    rev = "d0dfd0e6491653f4bc71369a7a129277612ef43a";
+    sha256 = "sha256-1UQnR8f4lAuXR5J8RWGc9c7fSy1j8a0kC0YxkjkbM9w=";
   };
 
   patches = [

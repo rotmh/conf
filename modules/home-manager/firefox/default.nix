@@ -86,8 +86,8 @@ in
         search = import ./search.nix { inherit lib; };
         bookmarks = import ./bookmarks.nix;
 
-        userChrome = "${chromeSrc}/userChrome.css";
-        userContent = "${chromeSrc}/userContent.css";
+        userChrome = builtins.readFile "${chromeSrc}/userChrome.css";
+        userContent = builtins.readFile "${chromeSrc}/userContent.css";
       };
 
       profiles.guest = lib.mkIf cfg.createGuestProfile {
