@@ -14,6 +14,12 @@
       "wifi/hotspot/psk" = {
         sopsFile = ./secrets/network.yaml;
       };
+      "wifi/class/ssid" = {
+        sopsFile = ./secrets/network.yaml;
+      };
+      "wifi/class/psk" = {
+        sopsFile = ./secrets/network.yaml;
+      };
     };
 
     templates = {
@@ -22,6 +28,8 @@
         WIFI_HOME_PSK="${config.sops.placeholder."wifi/home/psk"}"
         WIFI_HOTSPOT_SSID="${config.sops.placeholder."wifi/hotspot/ssid"}"
         WIFI_HOTSPOT_PSK="${config.sops.placeholder."wifi/hotspot/psk"}"
+        WIFI_CLASS_SSID="${config.sops.placeholder."wifi/class/ssid"}"
+        WIFI_CLASS_PSK="${config.sops.placeholder."wifi/class/psk"}"
       '';
     };
   };
@@ -35,7 +43,7 @@
       environmentFiles = [ config.sops.templates."wifi.env".path ];
 
       profiles = {
-        home-wifi = {
+        home = {
           connection = {
             id = "$WIFI_HOME_SSID";
             type = "wifi";
@@ -69,6 +77,27 @@
             auth-alg = "open";
             key-mgmt = "wpa-psk";
             psk = "$WIFI_HOTSPOT_PSK";
+          };
+          ipv4.method = "auto";
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+        };
+
+        class = {
+          connection = {
+            id = "$WIFI_CLASS_SSID";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "$WIFI_CLASS_SSID";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$WIFI_CLASS_PSK";
           };
           ipv4.method = "auto";
           ipv6 = {
