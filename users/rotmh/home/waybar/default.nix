@@ -1,3 +1,9 @@
+let
+  time = rec {
+    second = 1;
+    minute = 60 * second;
+  };
+in
 {
   programs.waybar = {
     enable = true;
@@ -67,6 +73,7 @@
         };
         "memory" = {
           "format" = "󰍛 {}%";
+          "interval" = 10 * time.second;
         };
         "network#wifi" = {
           "format" = "{iframe}";
@@ -103,6 +110,7 @@
             "󰂂"
             "󰁹"
           ];
+          "interval" = 10 * time.second;
         };
       };
     };
