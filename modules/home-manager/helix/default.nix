@@ -9,6 +9,21 @@
 let
   ns = lib'.modulesNamespace;
 
+  extractThemesFromDir =
+    dir:
+    let
+      isRegularFile = _name: type: type == "regular";
+      files = dir |> builtins.readDir |> lib.filterAttrs isRegularFile |> lib.attrNames;
+      themeName = lib.removeSuffix ".toml";
+      themeText = filename: builtins.readFile "${dir}/${filename}";
+      toThemeAttrs = p: {
+        name = themeName p;
+        value = themeText p;
+      };
+      themes = builtins.listToAttrs (map toThemeAttrs files);
+    in
+    themes;
+
   cfg = config.${ns}.helix;
 in
 {
@@ -68,9 +83,30 @@ in
           {
             insert = { } // disabledKeys;
             select = { } // disabledKeys;
-            normal = { } // disabledKeys;
+            normal = {
+              "A-j" = [
+                "move_visual_line_down"
+                "scroll_down"
+              ];
+              "A-k" = [
+                "move_visual_line_up"
+                "scroll_up"
+              ];
+            }
+            // disabledKeys;
           };
       };
+
+      themes =
+        let
+          alabaster = pkgs.fetchFromGitHub {
+            owner = "wolf";
+            repo = "alabaster-for-helix";
+            rev = "c312ff984000d3d0b6d20c04c39749efc1f7a7f2";
+            sha256 = "sha256-CSOx6Das35WLSxUBWNYSTRs3lWFWMy6oewbo1QX1P7Y=";
+          };
+        in
+        extractThemesFromDir "${alabaster}/helix/dot-config/helix/themes";
 
       languages = {
         language = lib.mapAttrsToList (name: cfg: cfg // { inherit name; }) {
