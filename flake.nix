@@ -40,7 +40,14 @@
 
     helix-git.url = "github:helix-editor/helix";
 
-    nixohess.url = "gitlab:fazzi/nixohess/d0ff650b5ab405064cd76ec7911b8877a1a80a09";
+    # qt5 has been flagged as unmaintained and insecure, so we must explicitly
+    # permit its usage to run Stremio. However, since insecure packages are not
+    # built by Hydra once marked with known vulnerabilities, we use a pinned,
+    # older nixpkgs revision from before that change. This ensures Hydra can
+    # provide prebuilt binaries, since building qt5 locally is too heavy.
+    nixpkgs-for-stremio.url = "nixpkgs/fdaf9ac0214d7dea1b3e573434cd96c0d10c9d76";
+
+    nixohess.url = "gitlab:fazzi/nixohess/352e5b16030355ee81b1d4971ffa5a83b7ca8dfc";
   };
 
   nixConfig = {
