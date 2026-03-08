@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 let
   host = "flamingo";
 in
@@ -11,7 +12,7 @@ in
     ./network.nix
     ./tlp.nix
     ./interception
-    ./clamav.nix
+    # ./clamav.nix
   ];
 
   networking.hostName = host;
@@ -33,6 +34,9 @@ in
   services.thermald.enable = true;
 
   services.upower.enable = true;
+
+  # services.printing.enable = true;
+  # services.printing.drivers = with pkgs; [ hplip ];
 
   virtualisation.virtualbox.host.enable = true;
 
@@ -57,6 +61,7 @@ in
       experimental-features = [
         "nix-command"
         "flakes"
+        "pipe-operators"
       ];
     };
 

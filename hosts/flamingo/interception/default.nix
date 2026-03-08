@@ -1,8 +1,10 @@
 { lib, pkgs, ... }:
 let
-  config = ''
-    { .from_key = KEY_CAPSLOCK, .to_key = KEY_ESC },
-  '';
+  config =
+    # syntax: c
+    ''
+      { .from_key = KEY_CAPSLOCK, .to_key = KEY_ESC },
+    '';
   c2e = pkgs.stdenv.mkDerivation {
     name = "c2e";
 

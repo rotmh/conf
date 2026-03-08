@@ -28,7 +28,6 @@ in
 
         core.editor = user.editor;
         init.defaultBranch = "main";
-        blame.ignoreRevsFile = ".git-blame-ignore-revs";
 
         url = {
           "ssh://git@github.com" = {

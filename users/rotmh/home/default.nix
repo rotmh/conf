@@ -121,7 +121,7 @@ in
 
   services.dunst.enable = true;
 
-  services.kdeconnect.enable = true;
+  services.kdeconnect.enable = false;
 
   programs.tofi = {
     enable = true;
