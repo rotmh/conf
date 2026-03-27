@@ -1,4 +1,13 @@
-{ pkgs, lib, ... }:
+{
+  config',
+  pkgs,
+  lib,
+  lib',
+  ...
+}:
+let
+  ns = lib'.modulesNamespace;
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -127,7 +136,7 @@
         "NIXOS_OZONE_WL, 1"
 
         # Set the GPU priority
-        "AQ_DRM_DEVICES, /dev/dri/intel-igpu:/dev/dri/nvidia-dgpu"
+        "AQ_DRM_DEVICES, ${config'.${ns}.gpu.gpus.intel-igpu.cardPath}"
 
         # "HYPRSHOT_DIR, /home/rotmh/media/images/screenshots"
       ];

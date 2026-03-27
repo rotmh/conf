@@ -20,20 +20,16 @@ in
   ];
 
   ${ns} = {
-    gpu.symlinks = {
-      enable = true;
-
-      gpus = [
-        {
-          vendor = "intel";
-          symlink = "intel-igpu";
-        }
-
-        {
-          vendor = "nvidia";
-          symlink = "nvidia-dgpu";
-        }
-      ];
+    gpu = {
+      gpus = {
+        intel-igpu = {
+          id = "00:02.0";
+        };
+        # XXX: What's the ID?
+        # nvidia-dgpu = {
+        #   id = "01:00.0";
+        # };
+      };
     };
   };
 

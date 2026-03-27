@@ -61,7 +61,10 @@ in
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs pkgs' lib'; };
+    extraSpecialArgs = {
+      inherit inputs pkgs' lib';
+      config' = config;
+    };
     users.${user.username} = import ./home;
     # backupFileExtension = "hmbackup";
   };
