@@ -1,5 +1,11 @@
-{ config, ... }:
+{ inputs, config, ... }:
 {
+  imports = [
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+  ];
+
+  hardware.nvidia.primeBatterySaverSpecialisation = true;
+
   # https://nixos.wiki/wiki/Nvidia
 
   # Enable OpenGL
@@ -23,11 +29,11 @@
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
-    powerManagement.enable = false;
+    powerManagement.enable = true;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
+    powerManagement.finegrained = true;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -45,10 +51,10 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
 
       # Make sure to use the correct Bus ID values for your system!
       intelBusId = "PCI:0:2:0";

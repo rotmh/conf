@@ -126,6 +126,9 @@
         "CLUTTER_BACKEND, wayland"
         "NIXOS_OZONE_WL, 1"
 
+        # Set the GPU priority
+        "AQ_DRM_DEVICES, /dev/dri/intel-igpu:/dev/dri/nvidia-dgpu"
+
         # "HYPRSHOT_DIR, /home/rotmh/media/images/screenshots"
       ];
 
@@ -159,7 +162,7 @@
         "blur on, match:namespace gtk4-layer-shell"
       ];
 
-      windowrulev2 = [
+      windowrule = [
         "match:class clipse, float on, size 622 652"
       ];
     };

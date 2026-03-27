@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{ inputs, lib', ... }:
 let
   host = "flamingo";
+
+  ns = lib'.modulesNamespace;
 in
 {
   imports = [
+    inputs.self.nixosModules.default
+
     ./impermanence.nix
     ./bluetooth.nix
     ./audio.nix
@@ -14,6 +18,24 @@ in
     ./interception
     # ./clamav.nix
   ];
+
+  ${ns} = {
+    gpu.symlinks = {
+      enable = true;
+
+      gpus = [
+        {
+          vendor = "intel";
+          symlink = "intel-igpu";
+        }
+
+        {
+          vendor = "nvidia";
+          symlink = "nvidia-dgpu";
+        }
+      ];
+    };
+  };
 
   networking.hostName = host;
 
@@ -38,19 +60,19 @@ in
   # services.printing.enable = true;
   # services.printing.drivers = with pkgs; [ hplip ];
 
-  virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
 
-  virtualisation.libvirtd = {
-    enable = true;
+  # virtualisation.libvirtd = {
+  #   enable = true;
 
-    # Enable TPM emulation (for Windows 11)
-    qemu = {
-      swtpm.enable = true;
-    };
-  };
+  #   # Enable TPM emulation (for Windows 11)
+  #   qemu = {
+  #     swtpm.enable = true;
+  #   };
+  # };
 
   # Enable USB redirection
-  virtualisation.spiceUSBRedirection.enable = true;
+  # virtualisation.spiceUSBRedirection.enable = true;
 
   nix = {
     settings = {

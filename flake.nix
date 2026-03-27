@@ -99,6 +99,7 @@
       };
 
       homeManagerModules.default = import ./modules/home-manager { inherit inputs pkgs' lib'; };
+      nixosModules.default = import ./modules/nixos { inherit inputs pkgs' lib'; };
 
       maintainers = {
         rotmh = {

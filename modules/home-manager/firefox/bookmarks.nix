@@ -28,6 +28,12 @@
       url = "https://netflix.com";
     }
     {
+      name = "HBO Max";
+      tags = [ "entertainment" ];
+      keyword = "hbo";
+      url = "https://play.hbomax.com";
+    }
+    {
       name = "ChatGPT";
       tags = [
         "llm"

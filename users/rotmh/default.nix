@@ -42,16 +42,16 @@ in
 
       networkmanager
 
-      gnome-boxes # VM management
-      dnsmasq # VM networking
-      phodav # (optional) Share files with guest VMs
+      # gnome-boxes # VM management
+      # dnsmasq # VM networking
+      # phodav # (optional) Share files with guest VMs
     ];
   };
 
-  users.extraGroups.vboxusers.members = [ user.username ];
+  # users.extraGroups.vboxusers.members = [ user.username ];
 
-  users.groups.libvirtd.members = [ user.username ];
-  users.groups.kvm.members = [ user.username ];
+  # users.groups.libvirtd.members = [ user.username ];
+  # users.groups.kvm.members = [ user.username ];
 
   networking.networkmanager.enable = true;
 

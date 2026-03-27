@@ -64,6 +64,10 @@
         }
         {
           passKeys = "f";
+          pattern = "^https?://[^/]*play.hbomax.com/video/watch";
+        }
+        {
+          passKeys = "f";
           pattern = "^https?://[^/]*youtube.com/watch";
         }
       ];
