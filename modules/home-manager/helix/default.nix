@@ -32,6 +32,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    ${ns}.impermanence.files = [
+      ".local/share/helix/trusted_workspaces"
+    ];
+
     programs.helix = {
       enable = true;
 
