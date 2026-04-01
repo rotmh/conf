@@ -88,6 +88,14 @@ in
             insert = { } // disabledKeys;
             select = { } // disabledKeys;
             normal = {
+              space = {
+                # Git mode
+                g = {
+                  c = "changed_file_picker";
+                  b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
+                };
+              };
+
               "A-j" = [
                 "move_visual_line_down"
                 "scroll_down"
