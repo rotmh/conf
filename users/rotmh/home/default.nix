@@ -71,6 +71,11 @@ in
       createGuestProfile = true;
     };
 
+    chromium = {
+      enable = false;
+      enableWideVine = true;
+    };
+
     hledger = {
       enable = true;
       journal = "~/.hledger.journal";
