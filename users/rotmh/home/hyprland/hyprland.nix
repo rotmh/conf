@@ -136,7 +136,7 @@ in
         "NIXOS_OZONE_WL, 1"
 
         # Set the GPU priority
-        "AQ_DRM_DEVICES, ${config'.${ns}.gpu.gpus.intel-igpu.cardPath}"
+        "AQ_DRM_DEVICES, ${config'.${ns}.gpu.gpus.intel-igpu.symlinkPath}"
 
         # "HYPRSHOT_DIR, /home/rotmh/media/images/screenshots"
       ];

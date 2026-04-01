@@ -9,17 +9,22 @@ let
   ns = lib'.modulesNamespace;
 
   gpuType = lib.types.submodule (
-    { config, ... }:
+    { name, ... }:
     {
       options = {
         id = lib.mkOption {
           type = lib.types.str;
           example = "00:02.0";
         };
-        cardPath = lib.mkOption {
+
+        symlinkPath = lib.mkOption {
           type = lib.types.str;
-          default = "/dev/dri/by-path/pci-0000:${config.id}-card";
+          readOnly = true;
         };
+      };
+
+      config = {
+        symlinkPath = "/dev/dri/${name}";
       };
     }
   );
@@ -35,5 +40,19 @@ in
         GPU entries.
       '';
     };
+  };
+
+  config = {
+    services.udev.packages =
+      let
+        symlinkFor =
+          name:
+          { id, ... }:
+          pkgs'.gpu-udev-finder.override {
+            gpuId = id;
+            symlinkName = name;
+          };
+      in
+      lib.mapAttrsToList symlinkFor cfg.gpus;
   };
 }
