@@ -97,16 +97,18 @@ in
     };
 
     clipse.enable = true;
-    fish.enable = true;
-    git.enable = true;
     alacritty.enable = true;
-    helix.enable = true;
     password-store.enable = true;
     stremio.enable = true;
+
+    fish.enable = true;
+    git.enable = true;
     zoxide.enable = true;
     starship.enable = true;
     direnv.enable = true;
 
+    helix.enable = true;
+    kakoune.enable = true;
     vscode.enable = true;
   };
 
@@ -143,31 +145,6 @@ in
       font = "monospace";
       background-color = "#000A";
     };
-  };
-
-  programs.kakoune = {
-    enable = true;
-    plugins = [ pkgs.kakounePlugins.kakoune-lsp ];
-    extraConfig = ''
-      eval %sh{kak-lsp}
-      lsp-enable
-
-      set-option global modelinefmt "%opt{lsp_modeline} %opt{modelinefmt}"
-
-      map global user l ':enter-user-mode lsp<ret>' -docstring 'LSP mode'
-
-      map global goto d <esc>:lsp-definition<ret> -docstring 'LSP definition'
-      map global goto r <esc>:lsp-references<ret> -docstring 'LSP references'
-      map global goto y <esc>:lsp-type-definition<ret> -docstring 'LSP type definition'
-
-      map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
-
-      map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-      map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-      map global object f '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
-      map global object t '<a-semicolon>lsp-object Class Interface Module Namespace Struct<ret>' -docstring 'LSP class or module'
-      map global object d '<a-semicolon>lsp-diagnostic-object error warning<ret>' -docstring 'LSP errors and warnings'
-      map global object D '<a-semicolon>lsp-diagnostic-object error<ret>' -docstring 'LSP errors'    '';
   };
 
   programs.bat.enable = true;
